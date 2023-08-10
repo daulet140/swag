@@ -79,7 +79,7 @@ var initFlags = []cli.Flag{
 	&cli.StringFlag{
 		Name:    outputTypesFlag,
 		Aliases: []string{"ot"},
-		Value:   "go,json,yaml",
+		Value:   "go,json,yaml,md",
 		Usage:   "Output types of generated files (docs.go, swagger.json, swagger.yaml) like go,json,yaml",
 	},
 	&cli.BoolFlag{

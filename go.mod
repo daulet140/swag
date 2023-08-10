@@ -32,6 +32,6 @@ require (
 )
 
 retract (
-	v1.9.0 // published accidentally
 	v1.16.0 // published accidentally
+	v1.9.0 // published accidentally
 )

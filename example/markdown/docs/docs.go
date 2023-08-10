@@ -215,7 +215,7 @@ const docTemplate = `{
     },
     "tags": [
         {
-            "description": "# Admin TAG API documentation\n\n**Admin** functions goes here \n\nFor more info please read [link](/docs/readme.md).\n\n",
+            "description": "# Admin TAG API documentation\n\n**Admin** functions goes here \n\nFor more info please read [link](/docs/).\n\n",
             "name": "admin"
         }
     ]

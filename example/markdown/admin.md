@@ -2,5 +2,5 @@
 
 **Admin** functions goes here 
 
-For more info please read [link](/docs/readme.md).
+For more info please read [link](/docs/).
 

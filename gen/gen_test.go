@@ -22,7 +22,7 @@ import (
 
 const searchDir = "../testdata/simple"
 
-var outputTypes = []string{"go", "json", "yaml"}
+var outputTypes = []string{"go", "json", "yaml", "md"}
 
 func TestGen_Build(t *testing.T) {
 	config := &Config{
@@ -38,6 +38,7 @@ func TestGen_Build(t *testing.T) {
 		filepath.Join(config.OutputDir, "docs.go"),
 		filepath.Join(config.OutputDir, "swagger.json"),
 		filepath.Join(config.OutputDir, "swagger.yaml"),
+		filepath.Join(config.OutputDir, "README.md"),
 	}
 	for _, expectedFile := range expectedFiles {
 		if _, err := os.Stat(expectedFile); os.IsNotExist(err) {
@@ -53,7 +54,7 @@ func TestGen_SpecificOutputTypes(t *testing.T) {
 		SearchDir:          searchDir,
 		MainAPIFile:        "./main.go",
 		OutputDir:          "../testdata/simple/docs",
-		OutputTypes:        []string{"go", "unknownType"},
+		OutputTypes:        []string{"go", "unknownType", "md"},
 		PropNamingStrategy: "",
 	}
 	assert.NoError(t, New().Build(config))
@@ -63,6 +64,7 @@ func TestGen_SpecificOutputTypes(t *testing.T) {
 		shouldExist  bool
 	}{
 		{filepath.Join(config.OutputDir, "docs.go"), true},
+		{filepath.Join(config.OutputDir, "README.md"), true},
 		{filepath.Join(config.OutputDir, "swagger.json"), false},
 		{filepath.Join(config.OutputDir, "swagger.yaml"), false},
 	}
@@ -357,6 +359,34 @@ func TestGen_jsonToYAML(t *testing.T) {
 	expectedFiles := []string{
 		filepath.Join(config.OutputDir, "docs.go"),
 		filepath.Join(config.OutputDir, "swagger.json"),
+	}
+
+	for _, expectedFile := range expectedFiles {
+		if _, err := os.Stat(expectedFile); os.IsNotExist(err) {
+			require.NoError(t, err)
+		}
+
+		_ = os.Remove(expectedFile)
+	}
+}
+
+func TestGen_json2MD(t *testing.T) {
+	config := &Config{
+		SearchDir:          searchDir,
+		MainAPIFile:        "./main.go",
+		OutputDir:          "../testdata/simple/docs",
+		OutputTypes:        outputTypes,
+		PropNamingStrategy: "",
+	}
+
+	gen := New()
+
+	assert.Error(t, gen.Build(config))
+
+	expectedFiles := []string{
+		filepath.Join(config.OutputDir, "docs.go"),
+		filepath.Join(config.OutputDir, "swagger.json"),
+		filepath.Join(config.OutputDir, "README.md"),
 	}
 
 	for _, expectedFile := range expectedFiles {

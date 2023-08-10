@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/swaggo/swag/md"
 	"go/format"
 	"io"
 	"log"
@@ -32,6 +33,7 @@ type Gen struct {
 	json          func(data interface{}) ([]byte, error)
 	jsonIndent    func(data interface{}) ([]byte, error)
 	jsonToYAML    func(data []byte) ([]byte, error)
+	jsonToMD      func(data []byte) ([]byte, error)
 	outputTypeMap map[string]genTypeWriter
 	debug         Debugger
 }
@@ -48,6 +50,7 @@ func New() *Gen {
 		jsonIndent: func(data interface{}) ([]byte, error) {
 			return json.MarshalIndent(data, "", "    ")
 		},
+		jsonToMD:   md.Json2MD,
 		jsonToYAML: yaml.JSONToYAML,
 		debug:      log.New(os.Stdout, "", log.LstdFlags),
 	}
@@ -57,6 +60,7 @@ func New() *Gen {
 		"json": gen.writeJSONSwagger,
 		"yaml": gen.writeYAMLSwagger,
 		"yml":  gen.writeYAMLSwagger,
+		"md":   gen.writeMDSwagger,
 	}
 
 	return &gen
@@ -291,6 +295,35 @@ func (g *Gen) writeJSONSwagger(config *Config, swagger *spec.Swagger) error {
 	}
 
 	g.debug.Printf("create swagger.json at %+v", jsonFileName)
+
+	return nil
+}
+
+func (g *Gen) writeMDSwagger(config *Config, swagger *spec.Swagger) error {
+	var filename = "README.md"
+
+	if config.InstanceName != swag.Name {
+		filename = config.InstanceName + "_" + filename
+	}
+
+	mdFileName := path.Join(config.OutputDir, filename)
+
+	b, err := g.json(swagger)
+	if err != nil {
+		return err
+	}
+
+	y, err := g.jsonToMD(b)
+	if err != nil {
+		return fmt.Errorf("cannot covert json to md error: %s", err)
+	}
+
+	err = g.writeFile(y, mdFileName)
+	if err != nil {
+		return err
+	}
+
+	g.debug.Printf("create README.md at %+v", mdFileName)
 
 	return nil
 }

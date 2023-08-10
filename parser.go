@@ -53,6 +53,9 @@ const (
 	licNameAttr             = "@license.name"
 	licURLAttr              = "@license.url"
 	versionAttr             = "@version"
+	nameAttr                = "@name"
+	wikiLinkAttr            = "@wikipage"
+	serviceIdAttr           = "@serviceId"
 	descriptionAttr         = "@description"
 	descriptionMarkdownAttr = "@description.markdown"
 	secBasicAttr            = "@securitydefinitions.basic"
@@ -523,13 +526,29 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 		switch attr := strings.ToLower(attribute); attr {
 		case versionAttr, titleAttr, tosAttr, licNameAttr, licURLAttr, conNameAttr, conURLAttr, conEmailAttr:
 			setSwaggerInfo(parser.swagger, attr, value)
-		case descriptionAttr:
+		case nameAttr:
 			if previousAttribute == attribute {
 				parser.swagger.Info.Description += "\n" + value
-
 				continue
 			}
-
+			setSwaggerInfo(parser.swagger, attr, value)
+		case wikiLinkAttr:
+			if previousAttribute == attribute {
+				parser.swagger.Info.WikiPage += "\n" + value
+				continue
+			}
+			setSwaggerInfo(parser.swagger, attr, value)
+		case serviceIdAttr:
+			if previousAttribute == attribute {
+				parser.swagger.Info.ServiceId += "\n" + value
+				continue
+			}
+			setSwaggerInfo(parser.swagger, attr, value)
+		case descriptionAttr:
+			if previousAttribute == attribute {
+				parser.swagger.Info.Name += "\n" + value
+				continue
+			}
 			setSwaggerInfo(parser.swagger, attr, value)
 		case descriptionMarkdownAttr:
 			commentInfo, err := getMarkdownForTag("api", parser.markdownFileDir)

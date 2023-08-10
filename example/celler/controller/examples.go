@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/daulet140/swag/example/celler/httputil"
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/swag/example/celler/httputil"
 )
 
 // PingExample godoc

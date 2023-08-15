@@ -54,8 +54,8 @@ const (
 	licURLAttr              = "@license.url"
 	versionAttr             = "@version"
 	nameAttr                = "@name"
-	wikiLinkAttr            = "@wikipage"
 	serviceIdAttr           = "@serviceId"
+	wikiPageAttr            = "@wikiPage"
 	descriptionAttr         = "@description"
 	descriptionMarkdownAttr = "@description.markdown"
 	secBasicAttr            = "@securitydefinitions.basic"
@@ -111,16 +111,16 @@ var allMethod = map[string]struct{}{
 
 // Parser implements a parser for Go source files.
 type Parser struct {
-	// swagger represents the root document object for the API specification
-	swagger *spec.Swagger
-
+	// Swagger represents the root document object for the API specification
+	Swagger *spec.Swagger
+	Name    string
 	// packages store entities of APIs, definitions, file, package path etc.  and their relations
 	packages *PackagesDefinitions
 
 	// parsedSchemas store schemas which have been parsed from ast.TypeSpec
 	parsedSchemas map[*TypeSpecDef]*Schema
 
-	// outputSchemas store schemas which will be export to swagger
+	// outputSchemas store schemas which will be export to Swagger
 	outputSchemas map[*TypeSpecDef]*Schema
 
 	// PropNamingStrategy naming strategy
@@ -200,7 +200,7 @@ type Debugger interface {
 // New creates a new Parser with default properties.
 func New(options ...func(*Parser)) *Parser {
 	parser := &Parser{
-		swagger: &spec.Swagger{
+		Swagger: &spec.Swagger{
 			SwaggerProps: spec.SwaggerProps{
 				Info: &spec.Info{
 					InfoProps: spec.InfoProps{
@@ -488,7 +488,7 @@ func (parser *Parser) ParseGeneralAPIInfo(mainAPIFile string) error {
 		return fmt.Errorf("cannot parse source files %s: %s", mainAPIFile, err)
 	}
 
-	parser.swagger.Swagger = "2.0"
+	parser.Swagger.Swagger = "2.0"
 
 	for _, comment := range fileTree.Comments {
 		comments := strings.Split(comment.Text(), "\n")
@@ -525,43 +525,31 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 
 		switch attr := strings.ToLower(attribute); attr {
 		case versionAttr, titleAttr, tosAttr, licNameAttr, licURLAttr, conNameAttr, conURLAttr, conEmailAttr:
-			setSwaggerInfo(parser.swagger, attr, value)
-		case nameAttr:
-			if previousAttribute == attribute {
-				parser.swagger.Info.Description += "\n" + value
-				continue
-			}
-			setSwaggerInfo(parser.swagger, attr, value)
-		case wikiLinkAttr:
-			if previousAttribute == attribute {
-				parser.swagger.Info.WikiPage += "\n" + value
-				continue
-			}
-			setSwaggerInfo(parser.swagger, attr, value)
-		case serviceIdAttr:
-			if previousAttribute == attribute {
-				parser.swagger.Info.ServiceId += "\n" + value
-				continue
-			}
-			setSwaggerInfo(parser.swagger, attr, value)
+			setSwaggerInfo(parser.Swagger, attr, value)
 		case descriptionAttr:
 			if previousAttribute == attribute {
-				parser.swagger.Info.Name += "\n" + value
+				parser.Swagger.Info.Description += "\n" + value
+
 				continue
 			}
-			setSwaggerInfo(parser.swagger, attr, value)
+
+			setSwaggerInfo(parser.Swagger, attr, value)
+		case nameAttr:
+			parser.Name = value
+			continue
+			setSwaggerInfo(parser.Swagger, attr, value)
 		case descriptionMarkdownAttr:
 			commentInfo, err := getMarkdownForTag("api", parser.markdownFileDir)
 			if err != nil {
 				return err
 			}
 
-			setSwaggerInfo(parser.swagger, descriptionAttr, string(commentInfo))
+			setSwaggerInfo(parser.Swagger, descriptionAttr, string(commentInfo))
 
 		case "@host":
-			parser.swagger.Host = value
+			parser.Swagger.Host = value
 		case "@basepath":
-			parser.swagger.BasePath = value
+			parser.Swagger.BasePath = value
 
 		case acceptAttr:
 			err := parser.ParseAcceptComment(value)
@@ -574,19 +562,19 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 				return err
 			}
 		case "@schemes":
-			parser.swagger.Schemes = strings.Split(value, " ")
+			parser.Swagger.Schemes = strings.Split(value, " ")
 		case "@tag.name":
-			parser.swagger.Tags = append(parser.swagger.Tags, spec.Tag{
+			parser.Swagger.Tags = append(parser.Swagger.Tags, spec.Tag{
 				TagProps: spec.TagProps{
 					Name: value,
 				},
 			})
 		case "@tag.description":
-			tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+			tag := parser.Swagger.Tags[len(parser.Swagger.Tags)-1]
 			tag.TagProps.Description = value
-			replaceLastTag(parser.swagger.Tags, tag)
+			replaceLastTag(parser.Swagger.Tags, tag)
 		case "@tag.description.markdown":
-			tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+			tag := parser.Swagger.Tags[len(parser.Swagger.Tags)-1]
 
 			commentInfo, err := getMarkdownForTag(tag.TagProps.Name, parser.markdownFileDir)
 			if err != nil {
@@ -594,23 +582,23 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 			}
 
 			tag.TagProps.Description = string(commentInfo)
-			replaceLastTag(parser.swagger.Tags, tag)
+			replaceLastTag(parser.Swagger.Tags, tag)
 		case "@tag.docs.url":
-			tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+			tag := parser.Swagger.Tags[len(parser.Swagger.Tags)-1]
 			tag.TagProps.ExternalDocs = &spec.ExternalDocumentation{
 				URL:         value,
 				Description: "",
 			}
 
-			replaceLastTag(parser.swagger.Tags, tag)
+			replaceLastTag(parser.Swagger.Tags, tag)
 		case "@tag.docs.description":
-			tag := parser.swagger.Tags[len(parser.swagger.Tags)-1]
+			tag := parser.Swagger.Tags[len(parser.Swagger.Tags)-1]
 			if tag.TagProps.ExternalDocs == nil {
 				return fmt.Errorf("%s needs to come after a @tags.docs.url", attribute)
 			}
 
 			tag.TagProps.ExternalDocs.Description = value
-			replaceLastTag(parser.swagger.Tags, tag)
+			replaceLastTag(parser.Swagger.Tags, tag)
 
 		case secBasicAttr, secAPIKeyAttr, secApplicationAttr, secImplicitAttr, secPasswordAttr, secAccessCodeAttr:
 			scheme, err := parseSecAttributes(attribute, comments, &line)
@@ -618,23 +606,23 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 				return err
 			}
 
-			parser.swagger.SecurityDefinitions[value] = scheme
+			parser.Swagger.SecurityDefinitions[value] = scheme
 
 		case securityAttr:
-			parser.swagger.Security = append(parser.swagger.Security, parseSecurity(value))
+			parser.Swagger.Security = append(parser.Swagger.Security, parseSecurity(value))
 
 		case "@query.collection.format":
 			parser.collectionFormatInQuery = TransToValidCollectionFormat(value)
 
 		case extDocsDescAttr, extDocsURLAttr:
-			if parser.swagger.ExternalDocs == nil {
-				parser.swagger.ExternalDocs = new(spec.ExternalDocumentation)
+			if parser.Swagger.ExternalDocs == nil {
+				parser.Swagger.ExternalDocs = new(spec.ExternalDocumentation)
 			}
 			switch attr {
 			case extDocsDescAttr:
-				parser.swagger.ExternalDocs.Description = value
+				parser.Swagger.ExternalDocs.Description = value
 			case extDocsURLAttr:
-				parser.swagger.ExternalDocs.URL = value
+				parser.Swagger.ExternalDocs.URL = value
 			}
 
 		default:
@@ -643,7 +631,7 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 
 				extExistsInSecurityDef := false
 				// for each security definition
-				for _, v := range parser.swagger.SecurityDefinitions {
+				for _, v := range parser.Swagger.SecurityDefinitions {
 					// check if extension exists
 					_, extExistsInSecurityDef = v.VendorExtensible.Extensions.GetString(extensionName)
 					// if it exists in at least one, then we stop iterating
@@ -668,13 +656,13 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 				}
 
 				if strings.Contains(extensionName, "logo") {
-					parser.swagger.Info.Extensions.Add(extensionName, valueJSON)
+					parser.Swagger.Info.Extensions.Add(extensionName, valueJSON)
 				} else {
-					if parser.swagger.Extensions == nil {
-						parser.swagger.Extensions = make(map[string]interface{})
+					if parser.Swagger.Extensions == nil {
+						parser.Swagger.Extensions = make(map[string]interface{})
 					}
 
-					parser.swagger.Extensions[attribute[1:]] = valueJSON
+					parser.Swagger.Extensions[attribute[1:]] = valueJSON
 				}
 			}
 		}
@@ -860,12 +848,12 @@ func initIfEmpty(license *spec.License) *spec.License {
 
 // ParseAcceptComment parses comment for given `accept` comment string.
 func (parser *Parser) ParseAcceptComment(commentLine string) error {
-	return parseMimeTypeList(commentLine, &parser.swagger.Consumes, "%v accept type can't be accepted")
+	return parseMimeTypeList(commentLine, &parser.Swagger.Consumes, "%v accept type can't be accepted")
 }
 
 // ParseProduceComment parses comment for given `produce` comment string.
 func (parser *Parser) ParseProduceComment(commentLine string) error {
-	return parseMimeTypeList(commentLine, &parser.swagger.Produces, "%v produce type can't be accepted")
+	return parseMimeTypeList(commentLine, &parser.Swagger.Produces, "%v produce type can't be accepted")
 }
 
 func isGeneralAPIComment(comments []string) bool {
@@ -1051,7 +1039,7 @@ func processRouterOperation(parser *Parser, operation *Operation) error {
 			ok       bool
 		)
 
-		pathItem, ok = parser.swagger.Paths.Paths[routeProperties.Path]
+		pathItem, ok = parser.Swagger.Paths.Paths[routeProperties.Path]
 		if !ok {
 			pathItem = spec.PathItem{}
 		}
@@ -1084,7 +1072,7 @@ func processRouterOperation(parser *Parser, operation *Operation) error {
 			*op = &operation.Operation
 		}
 
-		parser.swagger.Paths.Paths[routeProperties.Path] = pathItem
+		parser.Swagger.Paths.Paths[routeProperties.Path] = pathItem
 	}
 
 	return nil
@@ -1177,10 +1165,10 @@ func (parser *Parser) getTypeSchema(typeName string, file *ast.File, ref bool) (
 func (parser *Parser) getRefTypeSchema(typeSpecDef *TypeSpecDef, schema *Schema) *spec.Schema {
 	_, ok := parser.outputSchemas[typeSpecDef]
 	if !ok {
-		parser.swagger.Definitions[schema.Name] = spec.Schema{}
+		parser.Swagger.Definitions[schema.Name] = spec.Schema{}
 
 		if schema.Schema != nil {
-			parser.swagger.Definitions[schema.Name] = *schema.Schema
+			parser.Swagger.Definitions[schema.Name] = *schema.Schema
 		}
 
 		parser.outputSchemas[typeSpecDef] = schema
@@ -1202,7 +1190,7 @@ func (parser *Parser) isInStructStack(typeSpecDef *TypeSpecDef) bool {
 }
 
 // ParseDefinition parses given type spec that corresponds to the type under
-// given name and package, and populates swagger schema definitions registry
+// given name and package, and populates Swagger schema definitions registry
 // with a schema for the given type
 func (parser *Parser) ParseDefinition(typeSpecDef *TypeSpecDef) (*Schema, error) {
 	typeName := typeSpecDef.TypeName()
@@ -1267,7 +1255,7 @@ func (parser *Parser) ParseDefinition(typeSpecDef *TypeSpecDef) (*Schema, error)
 	// update an empty schema as a result of recursion
 	s2, found := parser.outputSchemas[typeSpecDef]
 	if found {
-		parser.swagger.Definitions[s2.Name] = *definition
+		parser.Swagger.Definitions[s2.Name] = *definition
 	}
 
 	return &sch, nil
@@ -1334,7 +1322,7 @@ func extractDeclarationDescription(commentGroups ...*ast.CommentGroup) string {
 }
 
 // parseTypeExpr parses given type expression that corresponds to the type under
-// given name and package, and returns swagger schema for it.
+// given name and package, and returns Swagger schema for it.
 func (parser *Parser) parseTypeExpr(file *ast.File, typeExpr ast.Expr, ref bool) (*spec.Schema, error) {
 	switch expr := typeExpr.(type) {
 	// type Foo interface{}
@@ -1545,7 +1533,7 @@ func (parser *Parser) getUnderlyingSchema(schema *spec.Schema) *spec.Schema {
 	if url := schema.Ref.GetURL(); url != nil {
 		if pos := strings.LastIndexByte(url.Fragment, '/'); pos >= 0 {
 			name := url.Fragment[pos+1:]
-			if schema, ok := parser.swagger.Definitions[name]; ok {
+			if schema, ok := parser.Swagger.Definitions[name]; ok {
 				return &schema
 			}
 		}
@@ -1750,7 +1738,7 @@ func (parser *Parser) checkOperationIDUniqueness() error {
 	// operationsIds contains all operationId annotations to check it's unique
 	operationsIds := make(map[string]string)
 
-	for path, item := range parser.swagger.Paths.Paths {
+	for path, item := range parser.Swagger.Paths.Paths {
 		var method, id string
 
 		for method = range allMethod {
@@ -1808,7 +1796,7 @@ func walkWith(excludes map[string]struct{}, parseVendor bool) func(path string, 
 
 // GetSwagger returns *spec.Swagger which is the root document object for the API specification.
 func (parser *Parser) GetSwagger() *spec.Swagger {
-	return parser.swagger
+	return parser.Swagger
 }
 
 // addTestType just for tests.

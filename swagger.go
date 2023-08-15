@@ -7,25 +7,25 @@ import (
 )
 
 // Name is a unique name be used to register swag instance.
-const Name = "swagger"
+const Name = "Swagger"
 
 var (
 	swaggerMu sync.RWMutex
 	swags     map[string]Swagger
 )
 
-// Swagger is an interface to read swagger document.
+// Swagger is an interface to read Swagger document.
 type Swagger interface {
 	ReadDoc() string
 }
 
-// Register registers swagger for given name.
+// Register registers Swagger for given name.
 func Register(name string, swagger Swagger) {
 	swaggerMu.Lock()
 	defer swaggerMu.Unlock()
 
 	if swagger == nil {
-		panic("swagger is nil")
+		panic("Swagger is nil")
 	}
 
 	if swags == nil {
@@ -39,7 +39,7 @@ func Register(name string, swagger Swagger) {
 	swags[name] = swagger
 }
 
-// GetSwagger returns the swagger instance for given name.
+// GetSwagger returns the Swagger instance for given name.
 // If not found, returns nil.
 func GetSwagger(name string) Swagger {
 	swaggerMu.RLock()
@@ -48,8 +48,8 @@ func GetSwagger(name string) Swagger {
 	return swags[name]
 }
 
-// ReadDoc reads swagger document. An optional name parameter can be passed to read a specific document.
-// The default name is "swagger".
+// ReadDoc reads Swagger document. An optional name parameter can be passed to read a specific document.
+// The default name is "Swagger".
 func ReadDoc(optionalName ...string) (string, error) {
 	swaggerMu.RLock()
 	defer swaggerMu.RUnlock()

@@ -27,12 +27,12 @@ func Test_FormatMain(t *testing.T) {
 
 	// @contact.name API Support
 	// @contact.url http://www.swagger.io/support
-	// @contact.email support@swagger.io
+	// @contact.email support@Swagger.io
 
 	// @license.name Apache 2.0
 	// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-	// @host petstore.swagger.io
+	// @host petstore.Swagger.io
 	// @BasePath /v2
 
 	// @securityDefinitions.basic BasicAuth
@@ -71,12 +71,12 @@ func Test_FormatMain(t *testing.T) {
 
 	//	@contact.name	API Support
 	//	@contact.url	http://www.swagger.io/support
-	//	@contact.email	support@swagger.io
+	//	@contact.email	support@Swagger.io
 
 	//	@license.name	Apache 2.0
 	//	@license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 
-	//	@host		petstore.swagger.io
+	//	@host		petstore.Swagger.io
 	//	@BasePath	/v2
 
 	//	@securityDefinitions.basic	BasicAuth

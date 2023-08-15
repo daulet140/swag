@@ -3,12 +3,13 @@ package md
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/daulet140/swag"
 	"log"
 	"text/template"
 )
 
 var readMeTemplate = `
-# {{.info.name}}
+# {{.name}}
 >	{{.info.description}}
 
 ## {{.info.title}}
@@ -97,19 +98,20 @@ External: {{.info.external_prod}}
 `
 
 func Json2MD(data []byte) ([]byte, error) {
-	var jsonObj map[string]interface{}
+	var jsonObj swag.Parser
 	err := json.Unmarshal(data, &jsonObj)
 	if err != nil {
 		return nil, err
 	}
 	// Create a new template
+	info := *jsonObj.GetSwagger()
 	readMeTemplate, err := template.New("readme").Parse(readMeTemplate)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var tpl bytes.Buffer
-	if err := readMeTemplate.Execute(&tpl, jsonObj); err != nil {
+	if err := readMeTemplate.Execute(&tpl, info); err != nil {
 		log.Fatal(err)
 	}
 

@@ -110,7 +110,7 @@ func TestParser_ParseDefinition(t *testing.T) {
 
 	// Parsing existing type
 	definition := &TypeSpecDef{
-		PkgPath: "github.com/swagger/swag",
+		PkgPath: "github.com/Swagger/swag",
 		File: &ast.File{
 			Name: &ast.Ident{
 				Name: "swag",
@@ -132,7 +132,7 @@ func TestParser_ParseDefinition(t *testing.T) {
 
 	// Parsing *ast.FuncType
 	definition = &TypeSpecDef{
-		PkgPath: "github.com/swagger/swag/model",
+		PkgPath: "github.com/Swagger/swag/model",
 		File: &ast.File{
 			Name: &ast.Ident{
 				Name: "model",
@@ -150,7 +150,7 @@ func TestParser_ParseDefinition(t *testing.T) {
 
 	// Parsing *ast.FuncType with parent spec
 	definition = &TypeSpecDef{
-		PkgPath: "github.com/swagger/swag/model",
+		PkgPath: "github.com/Swagger/swag/model",
 		File: &ast.File{
 			Name: &ast.Ident{
 				Name: "model",
@@ -179,15 +179,15 @@ func TestParser_ParseGeneralApiInfo(t *testing.T) {
         "http",
         "https"
     ],
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.\nIt has a lot of beautiful features.",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "http://www.Swagger.io/support",
+            "email": "support@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -200,7 +200,7 @@ func TestParser_ParseGeneralApiInfo(t *testing.T) {
             "url": "https://redocly.github.io/redoc/petstore-logo.png"
         }
     },
-    "host": "petstore.swagger.io",
+    "host": "petstore.Swagger.io",
     "basePath": "/v2",
     "paths": {},
     "securityDefinitions": {
@@ -255,7 +255,7 @@ func TestParser_ParseGeneralApiInfo(t *testing.T) {
     },
     "externalDocs": {
         "description": "OpenAPI",
-        "url": "https://swagger.io/resources/open-api"
+        "url": "https://Swagger.io/resources/open-api"
     },
     "x-google-endpoints": [
         {
@@ -273,7 +273,7 @@ func TestParser_ParseGeneralApiInfo(t *testing.T) {
 	err := p.ParseGeneralAPIInfo("testdata/main.go")
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -281,13 +281,13 @@ func TestParser_ParseGeneralApiInfoTemplated(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "http://www.Swagger.io/support",
+            "email": "support@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -344,7 +344,7 @@ func TestParser_ParseGeneralApiInfoTemplated(t *testing.T) {
     },
     "externalDocs": {
         "description": "OpenAPI",
-        "url": "https://swagger.io/resources/open-api"
+        "url": "https://Swagger.io/resources/open-api"
     },
     "x-google-endpoints": [
         {
@@ -362,7 +362,7 @@ func TestParser_ParseGeneralApiInfoTemplated(t *testing.T) {
 	err := p.ParseGeneralAPIInfo("testdata/templated.go")
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -404,11 +404,11 @@ func TestParser_ParseGeneralApiInfoWithOpsInSameFile(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.\nIt has a lot of beautiful features.",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {},
         "version": "1.0"
     },
@@ -423,7 +423,7 @@ func TestParser_ParseGeneralApiInfoWithOpsInSameFile(t *testing.T) {
 	err := p.ParseGeneralAPIInfo("testdata/single_file_api/main.go")
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -436,11 +436,11 @@ func TestParser_ParseGeneralAPIInfoMarkdown(t *testing.T) {
 	assert.NoError(t, err)
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "Swagger Example API Markdown Description",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {},
         "version": "1.0"
     },
@@ -452,7 +452,7 @@ func TestParser_ParseGeneralAPIInfoMarkdown(t *testing.T) {
         }
     ]
 }`
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 
 	p = New()
@@ -494,13 +494,13 @@ func TestParser_ParseAcceptComment(t *testing.T) {
 
 	parser := New()
 	assert.NoError(t, parseGeneralAPIInfo(parser, []string{comment}))
-	assert.Equal(t, parser.swagger.Consumes, expected)
+	assert.Equal(t, parser.Swagger.Consumes, expected)
 
 	assert.Error(t, parseGeneralAPIInfo(parser, []string{`@Accept cookies,candies`}))
 
 	parser = New()
 	assert.NoError(t, parser.ParseAcceptComment(comment[len(acceptAttr)+1:]))
-	assert.Equal(t, parser.swagger.Consumes, expected)
+	assert.Equal(t, parser.Swagger.Consumes, expected)
 }
 
 func TestParser_ParseProduceComment(t *testing.T) {
@@ -527,13 +527,13 @@ func TestParser_ParseProduceComment(t *testing.T) {
 
 	parser := New()
 	assert.NoError(t, parseGeneralAPIInfo(parser, []string{comment}))
-	assert.Equal(t, parser.swagger.Produces, expected)
+	assert.Equal(t, parser.Swagger.Produces, expected)
 
 	assert.Error(t, parseGeneralAPIInfo(parser, []string{`@Produce cookies,candies`}))
 
 	parser = New()
 	assert.NoError(t, parser.ParseProduceComment(comment[len(produceAttr)+1:]))
-	assert.Equal(t, parser.swagger.Produces, expected)
+	assert.Equal(t, parser.Swagger.Produces, expected)
 }
 
 func TestParser_ParseGeneralAPIInfoCollectionFormat(t *testing.T) {
@@ -560,7 +560,7 @@ func TestParser_ParseGeneralAPITagGroups(t *testing.T) {
 	}))
 
 	expected := []interface{}{map[string]interface{}{"name": "General", "tags": []interface{}{"lanes", "video-recommendations"}}}
-	assert.Equal(t, parser.swagger.Extensions["x-tagGroups"], expected)
+	assert.Equal(t, parser.Swagger.Extensions["x-tagGroups"], expected)
 }
 
 func TestParser_ParseGeneralAPITagDocs(t *testing.T) {
@@ -831,7 +831,7 @@ func Fun()  {
 		err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 		assert.NoError(t, err)
 
-		b, _ := json.MarshalIndent(p.swagger, "", "    ")
+		b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 		assert.Equal(t, expected, string(b))
 	})
 }
@@ -876,7 +876,7 @@ func TestParseSimpleApi1(t *testing.T) {
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "  ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "  ")
 	assert.JSONEq(t, string(expected), string(b))
 }
 
@@ -890,7 +890,7 @@ func TestParseInterfaceAndError(t *testing.T) {
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "  ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "  ")
 	assert.JSONEq(t, string(expected), string(b))
 }
 
@@ -898,15 +898,15 @@ func TestParseSimpleApi_ForSnakecase(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "http://www.Swagger.io/support",
+            "email": "support@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -914,7 +914,7 @@ func TestParseSimpleApi_ForSnakecase(t *testing.T) {
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
+    "host": "petstore.Swagger.io",
     "basePath": "/v2",
     "paths": {
         "/file/upload": {
@@ -1375,7 +1375,7 @@ func TestParseSimpleApi_ForSnakecase(t *testing.T) {
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -1383,15 +1383,15 @@ func TestParseSimpleApi_ForLowerCamelcase(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "http://www.Swagger.io/support",
+            "email": "support@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -1399,7 +1399,7 @@ func TestParseSimpleApi_ForLowerCamelcase(t *testing.T) {
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
+    "host": "petstore.Swagger.io",
     "basePath": "/v2",
     "paths": {
         "/file/upload": {
@@ -1830,7 +1830,7 @@ func TestParseSimpleApi_ForLowerCamelcase(t *testing.T) {
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -1838,7 +1838,7 @@ func TestParseStructComment(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.",
         "title": "Swagger Example API",
@@ -1920,7 +1920,7 @@ func TestParseStructComment(t *testing.T) {
 	p := New()
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -1928,7 +1928,7 @@ func TestParseNonExportedJSONFields(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server.",
         "title": "Swagger Example API",
@@ -1995,7 +1995,7 @@ func TestParseNonExportedJSONFields(t *testing.T) {
 	p := New()
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -2007,13 +2007,13 @@ func TestParsePetApi(t *testing.T) {
         "http",
         "https"
     ],
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
-        "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key 'special-key' to test the authorization     filters.",
+        "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://Swagger.io](http://Swagger.io) or on [irc.freenode.net, #Swagger](http://Swagger.io/irc/).      For this sample, you can use the api key 'special-key' to test the authorization     filters.",
         "title": "Swagger Petstore",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
-            "email": "apiteam@swagger.io"
+            "email": "apiteam@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -2021,7 +2021,7 @@ func TestParsePetApi(t *testing.T) {
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
+    "host": "petstore.Swagger.io",
     "basePath": "/v2",
     "paths": {}
 }`
@@ -2029,7 +2029,7 @@ func TestParsePetApi(t *testing.T) {
 	p := New()
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -2037,15 +2037,15 @@ func TestParseModelAsTypeAlias(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "http://www.Swagger.io/support",
+            "email": "support@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -2053,7 +2053,7 @@ func TestParseModelAsTypeAlias(t *testing.T) {
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
+    "host": "petstore.Swagger.io",
     "basePath": "/v2",
     "paths": {
         "/testapi/time-as-time-container": {
@@ -2100,7 +2100,7 @@ func TestParseModelAsTypeAlias(t *testing.T) {
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -2115,7 +2115,7 @@ func TestParseComposition(t *testing.T) {
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 
 	// windows will fail: \r\n \n
 	assert.Equal(t, string(expected), string(b))
@@ -2132,7 +2132,7 @@ func TestParseImportAliases(t *testing.T) {
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	// windows will fail: \r\n \n
 	assert.Equal(t, string(expected), string(b))
 }
@@ -2152,7 +2152,7 @@ func TestParseTypeOverrides(t *testing.T) {
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	//windows will fail: \r\n \n
 	assert.Equal(t, string(expected), string(b))
 }
@@ -2168,7 +2168,7 @@ func TestGlobalSecurity(t *testing.T) {
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "  ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "  ")
 	assert.Equal(t, string(expected), string(b))
 }
 
@@ -2183,7 +2183,7 @@ func TestParseNested(t *testing.T) {
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, string(expected), string(b))
 }
 
@@ -2221,7 +2221,7 @@ func TestParseConflictSchemaName(t *testing.T) {
 	p := New(SetParseDependency(1))
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
@@ -2233,7 +2233,7 @@ func TestParseExternalModels(t *testing.T) {
 	p := New(SetParseDependency(1))
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	//ioutil.WriteFile("./testdata/external_models/main/expected.json",b,0777)
 	expected, err := os.ReadFile(filepath.Join(searchDir, "expected.json"))
 	assert.NoError(t, err)
@@ -2403,7 +2403,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	out, err := json.MarshalIndent(p.swagger.Definitions, "", "   ")
+	out, err := json.MarshalIndent(p.Swagger.Definitions, "", "   ")
 	assert.NoError(t, err)
 	assert.Equal(t, expected, string(out))
 
@@ -2466,7 +2466,7 @@ type ResponseWrapper struct {
 	err = parser.packages.RangeFiles(parser.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	out, err := json.MarshalIndent(parser.swagger.Definitions, "", "   ")
+	out, err := json.MarshalIndent(parser.Swagger.Definitions, "", "   ")
 	assert.NoError(t, err)
 	assert.Equal(t, expected, string(out))
 
@@ -2528,7 +2528,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	out, err := json.MarshalIndent(p.swagger.Definitions, "", "   ")
+	out, err := json.MarshalIndent(p.Swagger.Definitions, "", "   ")
 	assert.NoError(t, err)
 	assert.Equal(t, expected, string(out))
 }
@@ -2657,7 +2657,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	out, err := json.MarshalIndent(p.swagger.Definitions, "", "   ")
+	out, err := json.MarshalIndent(p.Swagger.Definitions, "", "   ")
 	assert.NoError(t, err)
 	assert.Equal(t, expected, string(out))
 }
@@ -2697,7 +2697,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2722,7 +2722,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2747,7 +2747,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2772,7 +2772,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2797,7 +2797,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2821,7 +2821,7 @@ func Test(){
 
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2846,7 +2846,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2872,7 +2872,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/v1/{id}"]
 
@@ -2910,7 +2910,7 @@ func Test3(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/api/{id}"]
 
@@ -2941,7 +2941,7 @@ func Test(){
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	ps := p.swagger.Paths.Paths
+	ps := p.Swagger.Paths.Paths
 
 	val, ok := ps["/examples/groups/{group_id}/user/{user_id}/address"]
 
@@ -2968,7 +2968,7 @@ func Test(){
 // 				p := New()
 // 				p.PropNamingStrategy = PascalCase
 // 				err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
-// 				b, _ := json.MarshalIndent(p.swagger, "", "    ")
+// 				b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 // 				assert.NotEqual(t, "", string(b))
 
 // 				if expected == "" {
@@ -3026,16 +3026,16 @@ func TestApiParseTag(t *testing.T) {
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
 
-	if len(p.swagger.Tags) != 3 {
+	if len(p.Swagger.Tags) != 3 {
 		t.Error("Number of tags did not match")
 	}
 
-	dogs := p.swagger.Tags[0]
+	dogs := p.Swagger.Tags[0]
 	if dogs.TagProps.Name != "dogs" || dogs.TagProps.Description != "Dogs are cool" {
 		t.Error("Failed to parse dogs name or description")
 	}
 
-	cats := p.swagger.Tags[1]
+	cats := p.Swagger.Tags[1]
 	if cats.TagProps.Name != "cats" || cats.TagProps.Description != "Cats are the devil" {
 		t.Error("Failed to parse cats name or description")
 	}
@@ -3068,11 +3068,11 @@ func TestParseTagMarkdownDescription(t *testing.T) {
 		t.Error("Failed to parse api description: " + err.Error())
 	}
 
-	if len(p.swagger.Tags) != 3 {
+	if len(p.Swagger.Tags) != 3 {
 		t.Error("Number of tags did not match")
 	}
 
-	apes := p.swagger.Tags[2]
+	apes := p.Swagger.Tags[2]
 	if apes.TagProps.Description == "" {
 		t.Error("Failed to parse tag description markdown file")
 	}
@@ -3089,7 +3089,7 @@ func TestParseApiMarkdownDescription(t *testing.T) {
 		t.Error("Failed to parse api description: " + err.Error())
 	}
 
-	if p.swagger.Info.Description == "" {
+	if p.Swagger.Info.Description == "" {
 		t.Error("Failed to parse api description: " + err.Error())
 	}
 }
@@ -3195,7 +3195,7 @@ func Fun()  {
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -3249,7 +3249,7 @@ func Fun()  {
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.JSONEq(t, expected, string(b))
 }
 
@@ -3285,13 +3285,13 @@ func Fun()  {
 	assert.NoError(t, err)
 
 	assert.NoError(t, err)
-	teacher, ok := p.swagger.Definitions["Teacher"]
+	teacher, ok := p.Swagger.Definitions["Teacher"]
 	assert.True(t, ok)
 	ref := teacher.Properties["child"].SchemaProps.Ref
 	assert.Equal(t, "#/definitions/Student", ref.String())
-	_, ok = p.swagger.Definitions["Student"]
+	_, ok = p.Swagger.Definitions["Student"]
 	assert.True(t, ok)
-	path, ok := p.swagger.Paths.Paths["/test"]
+	path, ok := p.Swagger.Paths.Paths["/test"]
 	assert.True(t, ok)
 	assert.Equal(t, "#/definitions/Teacher", path.Get.Parameters[0].Schema.Ref.String())
 	ref = path.Get.Responses.ResponsesProps.StatusCodeResponses[200].ResponseProps.Schema.Ref
@@ -3318,7 +3318,7 @@ func TestParseTabFormattedRenamedStructDefinition(t *testing.T) {
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	_, ok := p.swagger.Definitions["Pupil"]
+	_, ok := p.Swagger.Definitions["Pupil"]
 	assert.True(t, ok)
 }
 
@@ -3350,7 +3350,7 @@ func Fun()  {
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	_, ok := p.swagger.Definitions["main.Fun.response"]
+	_, ok := p.Swagger.Definitions["main.Fun.response"]
 	assert.True(t, ok)
 }
 
@@ -3435,7 +3435,7 @@ func Fun()  {
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -3495,7 +3495,7 @@ func TestParseJSONFieldString(t *testing.T) {
 	t.Parallel()
 
 	expected := `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server.",
         "title": "Swagger Example API",
@@ -3590,7 +3590,7 @@ func TestParseJSONFieldString(t *testing.T) {
 	p := New()
 	err := p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, _ := json.MarshalIndent(p.swagger, "", "    ")
+	b, _ := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.Equal(t, expected, string(b))
 }
 
@@ -3623,7 +3623,7 @@ func Fun()  {
 	err = p.packages.RangeFiles(p.ParseRouterAPIInfo)
 	assert.NoError(t, err)
 
-	teacher, ok := p.swagger.Definitions["Teacher"]
+	teacher, ok := p.Swagger.Definitions["Teacher"]
 	assert.True(t, ok)
 
 	name, ok := teacher.Properties["name"]
@@ -3832,7 +3832,7 @@ func TestTryAddDescription(t *testing.T) {
 		{
 			name: "no description",
 			lines: []string{
-				" @securitydefinitions.oauth2.application swagger",
+				" @securitydefinitions.oauth2.application Swagger",
 				" @tokenurl https://example.com/oauth/token",
 				" @not-description some description",
 			},
@@ -3849,7 +3849,7 @@ func TestTryAddDescription(t *testing.T) {
 		{
 			name: "description has invalid format",
 			lines: []string{
-				"@securitydefinitions.oauth2.implicit swagger",
+				"@securitydefinitions.oauth2.implicit Swagger",
 				"@authorizationurl https://example.com/oauth/token",
 				"@description 12345",
 			},
@@ -4005,11 +4005,11 @@ func TestParser_parseExtension(t *testing.T) {
 			})
 			assert.NoError(t, err)
 			for p, isExpected := range tt.expectedPaths {
-				_, ok := tt.parser.swagger.Paths.Paths[p]
+				_, ok := tt.parser.Swagger.Paths.Paths[p]
 				assert.Equal(t, isExpected, ok)
 			}
 
-			for p := range tt.parser.swagger.Paths.Paths {
+			for p := range tt.parser.Swagger.Paths.Paths {
 				_, isExpected := tt.expectedPaths[p]
 				assert.Equal(t, isExpected, true)
 			}

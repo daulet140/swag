@@ -21,7 +21,7 @@ type Spec struct {
 	RightDelim       string
 }
 
-// ReadDoc parses SwaggerTemplate into swagger document.
+// ReadDoc parses SwaggerTemplate into Swagger document.
 func (i *Spec) ReadDoc() string {
 	i.Description = strings.ReplaceAll(i.Description, "\n", "\\n")
 

@@ -80,7 +80,7 @@ func TestSpec_ReadDoc(t *testing.T) {
 				BasePath:         "/",
 				InfoInstanceName: "TestInstanceName",
 				SwaggerTemplate: `{
-			"swagger": "2.0",
+			"Swagger": "2.0",
 			"info": {
 				"description": "{{escape .Description}}",
 				"title": "{{.Title}}",
@@ -91,7 +91,7 @@ func TestSpec_ReadDoc(t *testing.T) {
 		}`,
 			},
 			want: "{" +
-				"\n\t\t\t\"swagger\": \"2.0\"," +
+				"\n\t\t\t\"Swagger\": \"2.0\"," +
 				"\n\t\t\t\"info\": {" +
 				"\n\t\t\t\t\"description\": \"\",\n\t\t\t\t\"" +
 				"title\": \"\"," +
@@ -142,7 +142,7 @@ func TestSpec_ReadDoc(t *testing.T) {
 				BasePath:         "/",
 				InfoInstanceName: "TestInstanceName",
 				SwaggerTemplate: `{
-			"swagger": "2.0",
+			"Swagger": "2.0",
 			"info": {
 				"description": "{%escape .Description%}",
 				"title": "{%.Title%}",
@@ -155,7 +155,7 @@ func TestSpec_ReadDoc(t *testing.T) {
 				RightDelim: "%}",
 			},
 			want: "{" +
-				"\n\t\t\t\"swagger\": \"2.0\"," +
+				"\n\t\t\t\"Swagger\": \"2.0\"," +
 				"\n\t\t\t\"info\": {" +
 				"\n\t\t\t\t\"description\": \"\",\n\t\t\t\t\"" +
 				"title\": \"\"," +

@@ -1165,7 +1165,7 @@ func (operation *Operation) AddResponse(code int, response *spec.Response) {
 	operation.Responses.StatusCodeResponses[code] = *response
 }
 
-// createParameter returns swagger spec.Parameter for given  paramType, description, paramName, schemaType, required.
+// createParameter returns Swagger spec.Parameter for given  paramType, description, paramName, schemaType, required.
 func createParameter(paramType, description, paramName, objectType, schemaType string, required bool, enums []interface{}, collectionFormat string) spec.Parameter {
 	// //five possible parameter types. 	query, path, body, header, form
 	result := spec.Parameter{

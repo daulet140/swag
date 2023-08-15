@@ -7,15 +7,15 @@ import (
 )
 
 var doc = `{
-    "swagger": "2.0",
+    "Swagger": "2.0",
     "info": {
         "description": "This is a sample server Petstore server.",
         "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "http://Swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "url": "http://www.Swagger.io/support",
+            "email": "support@Swagger.io"
         },
         "license": {
             "name": "Apache 2.0",
@@ -23,7 +23,7 @@ var doc = `{
         },
         "version": "1.0"
     },
-    "host": "petstore.swagger.io",
+    "host": "petstore.Swagger.io",
     "basePath": "/v2",
     "paths": {
         "/testapi/get-string-by-int/{some_id}": {

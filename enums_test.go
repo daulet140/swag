@@ -17,7 +17,7 @@ func TestParseGlobalEnums(t *testing.T) {
 	p := New()
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 	constsPath := "github.com/daulet140/swag/testdata/enums/consts"

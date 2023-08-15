@@ -117,9 +117,6 @@ func (v *VendorExtensible) UnmarshalJSON(data []byte) error {
 
 // InfoProps the properties for an info definition
 type InfoProps struct {
-	Name           string       `json:"name"`
-	ServiceId      string       `json:"serviceID"`
-	WikiPage       string       `json:"wikiLink"`
 	Description    string       `json:"description,omitempty"`
 	Title          string       `json:"title,omitempty"`
 	TermsOfService string       `json:"termsOfService,omitempty"`

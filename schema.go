@@ -65,17 +65,17 @@ func IsPrimitiveType(typeName string) bool {
 	return false
 }
 
-// IsInterfaceLike determines whether the swagger type name is an go named interface type like error type.
+// IsInterfaceLike determines whether the Swagger type name is an go named interface type like error type.
 func IsInterfaceLike(typeName string) bool {
 	return typeName == ERROR || typeName == ANY
 }
 
-// IsNumericType determines whether the swagger type name is a numeric type.
+// IsNumericType determines whether the Swagger type name is a numeric type.
 func IsNumericType(typeName string) bool {
 	return typeName == INTEGER || typeName == NUMBER
 }
 
-// TransToValidSchemeType indicates type will transfer golang basic type to swagger supported type.
+// TransToValidSchemeType indicates type will transfer golang basic type to Swagger supported type.
 func TransToValidSchemeType(typeName string) string {
 	switch typeName {
 	case "uint", "int", "uint8", "int8", "uint16", "int16", "byte":

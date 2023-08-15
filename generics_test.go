@@ -39,7 +39,7 @@ func TestParseGenericsBasic(t *testing.T) {
 
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 }
@@ -54,7 +54,7 @@ func TestParseGenericsArrays(t *testing.T) {
 	p := New()
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 }
@@ -69,7 +69,7 @@ func TestParseGenericsNested(t *testing.T) {
 	p := New()
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 }
@@ -84,7 +84,7 @@ func TestParseGenericsMultiLevelNesting(t *testing.T) {
 	p := New()
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 }
@@ -99,7 +99,7 @@ func TestParseGenericsProperty(t *testing.T) {
 	p := New()
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	os.WriteFile(searchDir+"/expected.json", b, fs.ModePerm)
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
@@ -115,7 +115,7 @@ func TestParseGenericsNames(t *testing.T) {
 	p := New()
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 }
@@ -130,7 +130,7 @@ func TestParseGenericsPackageAlias(t *testing.T) {
 	p := New(SetParseDependency(1))
 	err = p.ParseAPI(searchDir, mainAPIFile, defaultParseDepth)
 	assert.NoError(t, err)
-	b, err := json.MarshalIndent(p.swagger, "", "    ")
+	b, err := json.MarshalIndent(p.Swagger, "", "    ")
 	assert.NoError(t, err)
 	assert.Equal(t, string(expected), string(b))
 }

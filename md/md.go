@@ -9,7 +9,7 @@ import (
 )
 
 var readMeTemplate = `
-# {{.name}}
+# {{.Name}}
 >	{{.info.description}}
 
 ## {{.info.title}}
@@ -104,14 +104,14 @@ func Json2MD(data []byte) ([]byte, error) {
 		return nil, err
 	}
 	// Create a new template
-	info := *jsonObj.GetSwagger()
+
 	readMeTemplate, err := template.New("readme").Parse(readMeTemplate)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var tpl bytes.Buffer
-	if err := readMeTemplate.Execute(&tpl, info); err != nil {
+	if err := readMeTemplate.Execute(&tpl, jsonObj); err != nil {
 		log.Fatal(err)
 	}
 

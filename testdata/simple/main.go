@@ -19,6 +19,7 @@ import (
 // @url.external.staging http://petstore.swagger-staging.io
 // @url.external.production https://petstore.swagger.io
 // @build go build ./cmd/main.go
+// @git https://github.com/swaggo/swag
 
 // @contact.name API Support
 // @contact.url http://www.swagger.io/support

@@ -54,6 +54,7 @@ const (
 	licURLAttr              = "@license.url"
 	versionAttr             = "@version"
 	nameAttr                = "@service"
+	gitAttr                 = "@git"
 	fullNameAttr            = "@name"
 	serviceIdAttr           = "@vshep"
 	wikiPageAttr            = "@wiki"
@@ -127,6 +128,7 @@ type Parser struct {
 	// Swagger represents the root document object for the API specification
 	Swagger        *spec.Swagger
 	Name           string
+	Git            string
 	FullName       string
 	Build          string
 	VshepServiceId string
@@ -555,6 +557,8 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 			setSwaggerInfo(parser.Swagger, attr, value)
 		case nameAttr:
 			parser.Name = value
+		case gitAttr:
+			parser.Git = value
 		case fullNameAttr:
 			parser.FullName = value
 		case buildAttr:

@@ -51,12 +51,10 @@ ServiceID: {{.VshepServiceId}}
 
 | Ветка         | Покрытие тестами  |
 | ------------- | --------------:   |
-| master        | [![coverage report](https://gitlabce.1cb.kz/service/incomesv4/badges/main/coverage.svg)](https://gitlabce.1cb.kz/service/incomesv4/-/commits/master) |
-| dev           | [![coverage report](https://gitlabce.1cb.kz/service/incomesv4/badges/dev/coverage.svg)](https://gitlabce.1cb.kz/service/incomesv4/-/commits/dev) |
+| master        | [![coverage report]({{.Git}}/badges/main/coverage.svg)]({{.Git}}/-/commits/master) |
+| dev           | [![coverage report]({{.Git}}/badges/dev/coverage.svg)]({{.Git}}/-/commits/dev) |
 
 # SWAGGER
-
-> TODO указать свои ссылки
 
 TEST
 https://{{.Swagger.Host}}/swagger/index.html

@@ -54,8 +54,8 @@ const (
 	licURLAttr              = "@license.url"
 	versionAttr             = "@version"
 	nameAttr                = "@name"
-	serviceIdAttr           = "@serviceId"
-	wikiPageAttr            = "@wikiPage"
+	serviceIdAttr           = "@vshep"
+	wikiPageAttr            = "@wiki"
 	descriptionAttr         = "@description"
 	descriptionMarkdownAttr = "@description.markdown"
 	secBasicAttr            = "@securitydefinitions.basic"
@@ -112,8 +112,10 @@ var allMethod = map[string]struct{}{
 // Parser implements a parser for Go source files.
 type Parser struct {
 	// Swagger represents the root document object for the API specification
-	Swagger *spec.Swagger
-	Name    string
+	Swagger        *spec.Swagger
+	Name           string
+	VshepServiceId string
+	WikiPage       string
 	// packages store entities of APIs, definitions, file, package path etc.  and their relations
 	packages *PackagesDefinitions
 
@@ -536,8 +538,10 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 			setSwaggerInfo(parser.Swagger, attr, value)
 		case nameAttr:
 			parser.Name = value
-			continue
-			setSwaggerInfo(parser.Swagger, attr, value)
+		case serviceIdAttr:
+			parser.VshepServiceId = value
+		case wikiPageAttr:
+			parser.WikiPage = value
 		case descriptionMarkdownAttr:
 			commentInfo, err := getMarkdownForTag("api", parser.markdownFileDir)
 			if err != nil {

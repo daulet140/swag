@@ -1,13 +1,9 @@
-# incomesv4
 
-> TODO Официальное название проекта, если известно(с ОБЯЗАТЕЛЬНОЙ рафсшифровкой аббревиатур)
+# GetPetById
 
-## Сервис получения доходов версии 4
+## GetPetById income adf
 
-> TODO
-
-> Сервис получения доходов физ- или юрлица. Работает через vshep-payara(ВШЭП - внешний шлюз эл.правительства) для связи с
-> Центром Распределения Трудовых Ресурсов(ЦРТР)
+> This is a sample server Petstore server.
 
 # Содержание
 
@@ -34,15 +30,12 @@
 
 # ВШЭП
 
-> *TODO если есть*
+ServiceID: service-pet
 
-ServiceID: ...
 
-# Ссылка на wiki
+# Ссылка на wiki:
+https://petstore.swagger.io/
 
-> TODO
-
-...
 
 > TODO покрытие тестами - сменить ссылки на проект
 
@@ -56,9 +49,9 @@ ServiceID: ...
 > TODO указать свои ссылки
 
 TEST
-https://incomesv4-staging.1cb.kz/swagger/index.html
+https://petstore.swagger.io/swagger/index.html
 PROD
-https://incomesv4.1cb.kz/swagger/index.html
+https://petstore.swagger.io/swagger/index.html
 
 Сгенерировать документацию: swag init -g cmd/main.go --parseDependency --parseInternal из корня
 
@@ -119,3 +112,10 @@ incomesv4.company_requests_data - тело ответа ВШЭП для запр
 > TODO
 
 Secure2\Test2\WSO(бой\тест)?
+
+
+|            | тест | бой |
+|------------|------|----:|
+| внутренний |  http://petstore.swagger-staging.io    | https://petstore.swagger.io     |
+| внешний    |   http://petstore.swagger-staging.io   | https://petstore.swagger.io    |
+

@@ -6,13 +6,19 @@ import (
 	"github.com/daulet140/swag/testdata/simple/api"
 )
 
-// @name GetPetById
+// @service GetPetById
+// @name GetPetById income adf
 // @vshep service-pet
 // @wiki https://petstore.swagger.io/
 // @title Swagger Example API
 // @version 1.0
 // @description This is a sample server Petstore server.
 // @termsOfService http://swagger.io/terms/
+// @url.internal.staging http://petstore.swagger-staging.io
+// @url.internal.production https://petstore.swagger.io
+// @url.external.staging http://petstore.swagger-staging.io
+// @url.external.production https://petstore.swagger.io
+// @build go build ./cmd/main.go
 
 // @contact.name API Support
 // @contact.url http://www.swagger.io/support

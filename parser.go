@@ -53,9 +53,15 @@ const (
 	licNameAttr             = "@license.name"
 	licURLAttr              = "@license.url"
 	versionAttr             = "@version"
-	nameAttr                = "@name"
+	nameAttr                = "@service"
+	fullNameAttr            = "@name"
 	serviceIdAttr           = "@vshep"
 	wikiPageAttr            = "@wiki"
+	urlInternalTestAttr     = "@url.internal.staging"
+	urlExternalTestAttr     = "@url.external.staging"
+	urlInternalProdAttr     = "@url.internal.production"
+	urlExternalProdAttr     = "@url.external.production"
+	buildAttr               = "@build"
 	descriptionAttr         = "@description"
 	descriptionMarkdownAttr = "@description.markdown"
 	secBasicAttr            = "@securitydefinitions.basic"
@@ -109,12 +115,23 @@ var allMethod = map[string]struct{}{
 	http.MethodPatch:   {},
 }
 
+type Urls struct {
+	ExternalProd string
+	InternalProd string
+	ExternalDev  string
+	InternalDev  string
+}
+
 // Parser implements a parser for Go source files.
 type Parser struct {
 	// Swagger represents the root document object for the API specification
 	Swagger        *spec.Swagger
 	Name           string
+	FullName       string
+	Build          string
 	VshepServiceId string
+	Description    string
+	Urls           Urls
 	WikiPage       string
 	// packages store entities of APIs, definitions, file, package path etc.  and their relations
 	packages *PackagesDefinitions
@@ -531,15 +548,27 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 		case descriptionAttr:
 			if previousAttribute == attribute {
 				parser.Swagger.Info.Description += "\n" + value
-
+				parser.Description += "\n" + value
 				continue
 			}
 
 			setSwaggerInfo(parser.Swagger, attr, value)
 		case nameAttr:
 			parser.Name = value
+		case fullNameAttr:
+			parser.FullName = value
+		case buildAttr:
+			parser.Build = value
 		case serviceIdAttr:
 			parser.VshepServiceId = value
+		case urlExternalTestAttr:
+			parser.Urls.ExternalDev = value
+		case urlExternalProdAttr:
+			parser.Urls.ExternalProd = value
+		case urlInternalProdAttr:
+			parser.Urls.InternalProd = value
+		case urlInternalTestAttr:
+			parser.Urls.InternalDev = value
 		case wikiPageAttr:
 			parser.WikiPage = value
 		case descriptionMarkdownAttr:

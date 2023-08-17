@@ -9,7 +9,8 @@ import (
 )
 
 var readMeTemplate = `
-# {{.Name}}
+# {{.Swagger.Info.Title}}
+> {{.Name}}
 
 ## {{.FullName}}
 
@@ -59,6 +60,7 @@ ServiceID: {{.VshepServiceId}}
 
 TEST
 https://{{.Swagger.Host}}/swagger/index.html
+
 PROD
 https://{{.Swagger.Host}}/swagger/index.html
 

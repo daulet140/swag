@@ -1,6 +1,6 @@
 
 # GetPetById
-
+> Swagger Example API
 ## GetPetById income adf
 
 > This is a sample server Petstore server.
@@ -26,9 +26,7 @@
 > *TODO Дополнительные "рабочие названия", "бизнес названия", "прикольные прозвища" проекта(с ОБЯЗАТЕЛЬНОЙ рафсшифровкой
 аббревиатур)*
 
-- "доходы"
-- "сверхновые доходы"
-- "самые новые доходы"
+- GetPetById addname adf adf adf
 
 
 # ВШЭП

@@ -132,6 +132,7 @@ type Parser struct {
 	Git            string
 	FullName       string
 	AddName        string
+	AddNames       []string
 	Build          string
 	VshepServiceId string
 	Description    string

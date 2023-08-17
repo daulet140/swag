@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"github.com/daulet140/swag"
 	"log"
+	"strings"
 	"text/template"
 )
 
@@ -34,9 +35,11 @@ var readMeTemplate = `
 
 > *TODO Дополнительные "рабочие названия", "бизнес названия", "прикольные прозвища" проекта(с ОБЯЗАТЕЛЬНОЙ рафсшифровкой
 аббревиатур)*
-
-- {{.AddName}}
+	{{range .AddNames}}
+- {{.}}
+	{{end}}
 {{end}}
+
 {{if .VshepServiceId}}
 # ВШЭП
 
@@ -141,8 +144,10 @@ func Json2MD(data []byte) ([]byte, error) {
 
 	readMeTemplate, err := template.New("readme").Parse(readMeTemplate)
 	if err != nil {
+
 		log.Fatal(err)
 	}
+	jsonObj.AddNames = strings.Split(jsonObj.AddName, ", ")
 
 	var tpl bytes.Buffer
 	if err := readMeTemplate.Execute(&tpl, jsonObj); err != nil {

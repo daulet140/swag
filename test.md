@@ -1,8 +1,7 @@
 
-# GetPetById
-> Swagger Example API
-## GetPetById income adf
-
+# Swagger Example API
+> GetPetById income adf
+>
 > This is a sample server Petstore server.
 
 # Содержание
@@ -49,6 +48,7 @@ https://petstore.swagger.io/
 
 TEST
 https://petstore.swagger.io/swagger/index.html
+
 PROD
 https://petstore.swagger.io/swagger/index.html
 

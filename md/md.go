@@ -10,10 +10,8 @@ import (
 
 var readMeTemplate = `
 # {{.Swagger.Info.Title}}
-> {{.Name}}
-
-## {{.FullName}}
-
+> {{.FullName}}
+>
 > {{.Swagger.Info.Description}}
 
 # Содержание

@@ -17,7 +17,7 @@ var readMeTemplate = `
 
 # Содержание
 
-- [Другие названия](#другие-названия)
+{{if .AddName}}- [Другие названия](#другие-названия){{end}}
 {{if .VshepServiceId}}- [ВШЭП](#вшэп) {{end}}
 {{if .WikiPage}}- [Ссылка на wiki](#ссылка-на-wiki) {{end}}
 - [Swagger](#swagger)
@@ -28,15 +28,16 @@ var readMeTemplate = `
 - [Данные по хранению файлов](#данные-по-хранению-файлов)
 - [Ограничения](#ограничения)
 - [Куда опубликован](#куда-опубликован)
+- [Digital Nikolai](#digital-nikolai)
 
+{{if .AddName}}
 # Другие названия:
 
 > *TODO Дополнительные "рабочие названия", "бизнес названия", "прикольные прозвища" проекта(с ОБЯЗАТЕЛЬНОЙ рафсшифровкой
 аббревиатур)*
 
-- "доходы"
-- "сверхновые доходы"
-- "самые новые доходы"
+- {{.AddName}}
+{{end}}
 {{if .VshepServiceId}}
 # ВШЭП
 
@@ -118,16 +119,16 @@ incomesv4.company_requests_data - тело ответа ВШЭП для запр
 
 # Куда опубликован
 
-> TODO
-
-Secure2\Test2\WSO(бой\тест)?
-
 
 |            | тест | бой |
 |------------|------|----:|
 | внутренний |  {{.Urls.InternalDev}}    | {{.Urls.InternalProd}}     |
 | внешний    |   {{.Urls.ExternalDev}}   | {{.Urls.ExternalProd}}    |
 
+
+# Digital Nikolai
+
+> MATCH (n:Service {name:'{{.Name}}'}) RETURN n LIMIT 25
 `
 
 func Json2MD(data []byte) ([]byte, error) {

@@ -18,6 +18,8 @@
 - [Данные по хранению файлов](#данные-по-хранению-файлов)
 - [Ограничения](#ограничения)
 - [Куда опубликован](#куда-опубликован)
+- [Digital Nikolai](#digital-nikolai)
+
 
 # Другие названия:
 
@@ -27,6 +29,7 @@
 - "доходы"
 - "сверхновые доходы"
 - "самые новые доходы"
+
 
 # ВШЭП
 
@@ -41,12 +44,10 @@ https://petstore.swagger.io/
 
 | Ветка         | Покрытие тестами  |
 | ------------- | --------------:   |
-| master        | [![coverage report](https://gitlabce.1cb.kz/service/incomesv4/badges/main/coverage.svg)](https://gitlabce.1cb.kz/service/incomesv4/-/commits/master) |
-| dev           | [![coverage report](https://gitlabce.1cb.kz/service/incomesv4/badges/dev/coverage.svg)](https://gitlabce.1cb.kz/service/incomesv4/-/commits/dev) |
+| master        | [![coverage report](https://github.com/swaggo/swag/badges/main/coverage.svg)](https://github.com/swaggo/swag/-/commits/master) |
+| dev           | [![coverage report](https://github.com/swaggo/swag/badges/dev/coverage.svg)](https://github.com/swaggo/swag/-/commits/dev) |
 
 # SWAGGER
-
-> TODO указать свои ссылки
 
 TEST
 https://petstore.swagger.io/swagger/index.html
@@ -67,7 +68,8 @@ https://petstore.swagger.io/swagger/index.html
 
 Положить актуальный conf.json в папке config проекта, рядом с default.conf.json. Допускается скопировать
 default.conf.json и заполнить авторизационные данные БД и auth
-Для запуска - go run cmd/main.go
+
+Для запуска - go build ./cmd/main.go
 
 # Информация для сопровождения
 
@@ -109,13 +111,13 @@ incomesv4.company_requests_data - тело ответа ВШЭП для запр
 
 # Куда опубликован
 
-> TODO
-
-Secure2\Test2\WSO(бой\тест)?
-
 
 |            | тест | бой |
 |------------|------|----:|
 | внутренний |  http://petstore.swagger-staging.io    | https://petstore.swagger.io     |
 | внешний    |   http://petstore.swagger-staging.io   | https://petstore.swagger.io    |
 
+
+# Digital Nikolai
+
+> MATCH (n:Service {name:'GetPetById'}) RETURN n LIMIT 25

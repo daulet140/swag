@@ -8,6 +8,7 @@ import (
 
 // @service GetPetById
 // @name GetPetById income adf
+// @addname GetPetById addname adf adf adf
 // @vshep service-pet
 // @wiki https://petstore.swagger.io/
 // @title Swagger Example API

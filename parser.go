@@ -56,6 +56,7 @@ const (
 	nameAttr                = "@service"
 	gitAttr                 = "@git"
 	fullNameAttr            = "@name"
+	addNameAttr             = "@addname"
 	serviceIdAttr           = "@vshep"
 	wikiPageAttr            = "@wiki"
 	urlInternalTestAttr     = "@url.internal.staging"
@@ -130,6 +131,7 @@ type Parser struct {
 	Name           string
 	Git            string
 	FullName       string
+	AddName        string
 	Build          string
 	VshepServiceId string
 	Description    string
@@ -561,6 +563,8 @@ func parseGeneralAPIInfo(parser *Parser, comments []string) error {
 			parser.Git = value
 		case fullNameAttr:
 			parser.FullName = value
+		case addNameAttr:
+			parser.AddName = value
 		case buildAttr:
 			parser.Build = value
 		case serviceIdAttr:

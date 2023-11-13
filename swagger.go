@@ -7,7 +7,7 @@ import (
 )
 
 // Name is a unique name be used to register swag instance.
-const Name = "Swagger"
+const Name = "swagger"
 
 var (
 	swaggerMu sync.RWMutex

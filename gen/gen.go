@@ -539,7 +539,7 @@ var SwaggerInfo{{ if ne .InstanceName "swagger" }}{{ .InstanceName }} {{- end }}
 	RightDelim:       {{ printf "%q" .RightTemplateDelim}},
 }
 
-func init() {
+func InitSwag() {
 	swag.Register(SwaggerInfo{{ if ne .InstanceName "swagger" }}{{ .InstanceName }} {{- end }}.InstanceName(), SwaggerInfo{{ if ne .InstanceName "swagger" }}{{ .InstanceName }} {{- end }})
 }
 `
